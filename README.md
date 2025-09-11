@@ -1,4 +1,4 @@
-# Sudoku Solver (Python)
+# Sudokrypt
 
 A robust, object-oriented backtracking Sudoku solver written in Python.
 It reads a 9×9 Sudoku puzzle from a text file, validates the input, and prints the solution (if any) along with diagnostic information such as recursion count and optional timing.
@@ -23,8 +23,8 @@ You need **Python 3.8+** (no external dependencies required beyond the standard 
 Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/sudoku-solver.git
-cd sudoku-solver
+git clone https://github.com/MicheleGrieco/Sudokrypt.git
+cd sudokrypt
 ```
 
 ---
