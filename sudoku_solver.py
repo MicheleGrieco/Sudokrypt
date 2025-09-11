@@ -25,10 +25,14 @@ class SudokuSolver:
     """Class encapsulating a 9x9 Sudoku board and a backtracking solver."""
 
     def __init__(self, board: Optional[List[List[int]]] = None) -> None:
-        # Initialize the board; if none provided, create an empty 9x9 board.
+        """
+        Initialize the SudokuSolver with an optional board. If no board is provided,
+        initializes an empty 9x9 board.
+        Args:
+            board: Optional 9x9 list of lists of integers (0-9), where 0 represents empty cells.
+        """
         self.board: List[List[int]] = board if board is not None else [[0] * 9 for _ in range(9)]
-        # Counter for how many recursive calls were performed (for diagnostics).
-        self.recursive_calls: int = 0
+        self.recursive_calls: int = 0 # Counter for how many recursive calls were performed (for diagnostics).
 
     @staticmethod
     def parse_line_to_row(line: str) -> List[int]:
@@ -37,6 +41,10 @@ class SudokuSolver:
         Accepts either a compact string of 9 characters (e.g. "530070000")
         or space-separated tokens (e.g. "5 3 0 0 7 0 0 0 0").
         Uses 0 for blanks ('.' or '0').
+        Args:
+            line: A string representing one row of the Sudoku puzzle.
+        Returns:
+            A list of 9 integers (0-9) representing the row.
         """
         # Strip line ending and surrounding whitespace.
         raw = line.strip()
@@ -80,6 +88,15 @@ class SudokuSolver:
         """
         Read a Sudoku puzzle from a file and return a SudokuSolver instance.
         Will raise informative exceptions on malformed input.
+        Args:
+            cls: The class to instantiate (SudokuSolver).
+            path: Path to the input file.
+            skip_header: If True, skip the first line of the file (header).
+        Returns:
+            An instance of SudokuSolver with the board initialized from the file.
+        Raises:
+            IOError, OSError: If the file cannot be read.
+            ValueError: If the file format is invalid (wrong number of rows/columns, invalid characters).
         """
         # Read file using a context manager so the file is always closed.
         with open(path, "r", encoding="utf-8") as fh:
@@ -111,7 +128,12 @@ class SudokuSolver:
     def is_valid_placement(self, row: int, col: int, num: int) -> bool:
         """
         Check whether placing `num` at (row, col) is legal according to Sudoku rules.
-        Returns True if legal, False otherwise.
+        Args:
+            row: Row index (0-8).
+            col: Column index (0-8).
+            num: Number to place (1-9).
+        Returns:
+            True if placing num at (row, col) is valid, False otherwise.
         """
         # Check row for conflicts.
         for c in range(9):
@@ -138,6 +160,8 @@ class SudokuSolver:
         """
         Find an empty cell on the board (value 0).
         Returns a tuple (row, col) or None if the board is full.
+        Returns:
+            A tuple (row, col) of the first empty cell found, or None if no empty cells exist.
         """
         for r in range(9):
             for c in range(9):
@@ -148,8 +172,9 @@ class SudokuSolver:
     def solve(self) -> bool:
         """
         Solve the Sudoku board using naive backtracking.
-        Returns True if a solution was found, False otherwise.
         The solver mutates self.board in-place.
+        Returns:
+            True if the puzzle was solved, False if no solution exists.
         """
         # Increment recursion counter for diagnostics.
         self.recursive_calls += 1
@@ -185,7 +210,11 @@ class SudokuSolver:
 
 def main(argv: Optional[List[str]] = None) -> int:
     """
-    Command-line entry point. Returns an exit code (0 success, non-zero failure).
+    Command-line entry point.
+    Args:
+        argv: Optional list of command-line arguments (defaults to sys.argv[1:] if None).
+    Returns:
+        Exit code: 0 on success, non-zero on failure.
     """
     # Use provided argv or default to sys.argv[1:].
     argv = argv if argv is not None else sys.argv[1:]
