@@ -59,14 +59,14 @@ class SudokuSolver:
             if len(tokens) != 9:
                 raise ValueError(f"Expected 9 tokens in row but got {len(tokens)}: {raw!r}")
             row: List[int] = []
-            for tok in tokens:
-                if tok == '.' or tok == '0':
+            for token in tokens:
+                if token == '.' or token == '0':
                     row.append(0)
                 else:
                     # Validate each token is a single digit between 1 and 9.
-                    if len(tok) != 1 or not tok.isdigit() or not (1 <= int(tok) <= 9):
-                        raise ValueError(f"Invalid token in Sudoku row: {tok!r}")
-                    row.append(int(tok))
+                    if len(token) != 1 or not token.isdigit() or not (1 <= int(token) <= 9):
+                        raise ValueError(f"Invalid token in Sudoku row: {token!r}")
+                    row.append(int(token))
             return row
 
         # Otherwise treat as a compact string of characters.
