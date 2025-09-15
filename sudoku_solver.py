@@ -15,9 +15,9 @@ Input file format:
 """
 
 from __future__ import annotations
-import argparse                    # for robust command-line parsing
-import sys                         # for exit codes and argv fallback
-from typing import List, Optional  # type hints
+import argparse                    
+import sys                         
+from typing import List, Optional
 from time import perf_counter      # optional timing for performance info
 
 
@@ -100,17 +100,17 @@ class SudokuSolver:
         """
         # Read file using a context manager so the file is always closed.
         with open(path, "r", encoding="utf-8") as fh:
-            # Optionally skip a header line if the user requests that.
+            # Optionally skip the header line if the user requests that.
             if skip_header:
                 _ = fh.readline()
 
             rows: List[List[int]] = []
-            # Read up to 9 non-empty lines (we allow blank lines to be skipped).
+            # Read up to 9 non-empty lines (allow blank lines to be skipped).
             while len(rows) < 9:
                 line = fh.readline()
                 if line == "":  # EOF reached
                     break
-                # Ignore fully blank lines (but don't skip meaningful whitespace lines).
+                # Ignore fully blank lines (don't skip meaningful whitespace lines).
                 if line.strip() == "":
                     continue
                 # Parse the line into a row of 9 ints (raises on error).
@@ -182,8 +182,9 @@ class SudokuSolver:
         # Find an empty cell; if none, puzzle is solved.
         found = self.find_empty_cell()
         if found is None:
-            return True  # solved
+            return True  # Sudoku solved.
 
+        # Assign row and column of the empty cell.
         row, col = found
 
         # Try digits 1 through 9 in the empty cell.
