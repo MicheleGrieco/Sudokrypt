@@ -74,7 +74,7 @@ If your file has a header line before the puzzle, run the solver with `--skip-he
 Basic command:
 
 ```bash
-python sudoku_solver.py puzzle.txt
+python sudoku_solver.py ./boards/puzzle.txt
 ```
 
 Optional flags:
@@ -86,13 +86,13 @@ Optional flags:
 
 ```bash
 # Solve a puzzle
-python sudoku_solver.py puzzles/easy.txt
+python sudoku_solver.py ./boards/easy.txt
 
 # Solve a puzzle and show execution time
-python sudoku_solver.py puzzles/easy.txt --time
+python sudoku_solver.py ./boards/easy.txt --time
 
 # Skip a header line and show execution time
-python sudoku_solver.py puzzles/with_header.txt --skip-header --time
+python sudoku_solver.py ./boards/with_header.txt --skip-header --time
 ```
 
 **Example Output:**
