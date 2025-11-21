@@ -223,7 +223,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     # Set up a minimal and robust argument parser.
     parser = argparse.ArgumentParser(description="Solve a 9x9 Sudoku puzzle from a text file.")
     parser.add_argument("file", help="Path to input file containing the puzzle.")
-    parser.add_argument("--skip-header", action="store_true", help="Skip the first line of the file (header).")
+    parser.add_argument("--skip-header", action="store_true", default=True, help="Skip the first line of the file (header).")
     parser.add_argument("--time", action="store_true", help="Print elapsed time for solving.")
     args = parser.parse_args(argv)
 
