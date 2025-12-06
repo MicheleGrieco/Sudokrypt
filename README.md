@@ -149,4 +149,13 @@ docker run --rm -v "$PWD":/app sudoku-solver puzzle.txt --time
 
 This mounts the current directory into `/app` inside the container so the solver can access your `puzzle.txt`.
 
+Alternatively, you can use the `docker_run.sh` bash script, after you've granted it admin permits running `chmod +x docker_run.sh`.
+
+Simply type:
+
+```bash
+./docker_run.sh help
+```
+
+to get the help menu.
 ---
