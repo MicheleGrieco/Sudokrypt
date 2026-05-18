@@ -19,7 +19,7 @@ import argparse
 import sys                         
 from typing import List, Optional
 from time import perf_counter      # optional timing for performance info
-
+from typing import Set
 
 class SudokuSolver:
     """Class encapsulating a 9x9 Sudoku board and a backtracking solver."""
@@ -168,6 +168,39 @@ class SudokuSolver:
                 if self.board[r][c] == 0:
                     return r, c
         return None
+    
+    def candidates_for_cell(self, row: int, col: int) -> Set[int]:
+        """
+        Return the set of valid candidate numbers for an empty cell (row, col).
+        If the cell is not empty, returns an empty set.
+        """
+        if self.board[row][col] != 0:
+            return set()  # Not an empty cell
+        return {num for num in range(1, 10) if self.is_valid_placement(row, col, num)}
+    
+    def find_best_empty_cell(self) -> Optional[tuple[int, int, Set[int]]]:
+        """
+        Find an empty cell using MRV (minimum remaining values) heuristic.
+        Returns (row, col, candidates) or None if no empty cells exist.
+        If a cell with zero candidates is found, returns its empty candidate set (dead end).
+        """
+        best: Optional[tuple[int, int]] = None
+        best_candidates: Optional[Set[int]] = None
+        for r in range(9):
+            for c in range(9):
+                if self.board[r][c] != 0:
+                    continue
+                candidates = self.candidates_for_cell(r, c)
+                if not candidates:
+                    return (r, c, set())  # Dead end
+                if best is None or len(candidates) < len(best_candidates): # type: ignore
+                    best = (r, c)
+                    best_candidates = candidates
+                    if len(best_candidates) == 1:
+                        return (r, c, best_candidates)  # Optimal cell found
+        if best is None:
+            return None
+        return (best[0], best[1], best_candidates)  # type: ignore
 
     def solve(self) -> bool:
         """
